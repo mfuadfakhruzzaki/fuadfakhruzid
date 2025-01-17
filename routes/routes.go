@@ -54,7 +54,7 @@ func RegisterRoutes(r *gin.Engine) {
     r.POST("/contact", handlers.CreateContact)
 
     // Upload
-    r.POST("/profiles/:id/upload-picture", handlers.UploadProfilePicture)
-    r.POST("/profiles/:id/upload-cv", handlers.UploadCV)
+    r.POST("/profiles/upload-picture", handlers.UploadProfilePicture)
+    r.POST("/profiles/upload-cv", handlers.UploadCV)
 
 }

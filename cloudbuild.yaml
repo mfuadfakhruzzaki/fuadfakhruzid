@@ -22,6 +22,7 @@ steps:
         "--region",
         "asia-southeast2",
         "--allow-unauthenticated",
+        "--timeout=300s",
       ]
 images:
   - "gcr.io/$PROJECT_ID/my-app"

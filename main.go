@@ -12,10 +12,17 @@ import (
 )
 
 func main() {
+    config.LoadEnv()
+    
     // Inisialisasi Firestore (dan baca environment variables)
     if err := config.InitFirestore(); err != nil {
         log.Fatalf("Error initializing Firestore: %v", err)
     }
+
+    if err := config.InitGCS(); err != nil {
+        log.Fatalf("Failed to initialize Google Cloud Storage: %v", err)
+    }
+    
 
     r := gin.Default()
 

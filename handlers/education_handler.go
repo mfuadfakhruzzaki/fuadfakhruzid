@@ -57,7 +57,7 @@ func GetEducationByID(c *gin.Context) {
 	docSnap, err := docRef.Get(ctx)
 	if err != nil {
 		// Jika dokumen tidak ditemukan, Firestore akan mengembalikan error
-		if err != nil && err.Error() == "rpc error: code = NotFound desc = Document not found" {
+		if err.Error() == "rpc error: code = NotFound desc = Document not found" {
 			c.JSON(http.StatusNotFound, gin.H{"error": "Education not found"})
 		} else {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -149,7 +149,7 @@ func UpdateEducation(c *gin.Context) {
 	_, err := docRef.Update(ctx, updates)
 	if err != nil {
 		// Jika dokumen tidak ditemukan
-		if err != nil && err.Error() == "rpc error: code = NotFound desc = Document not found" {
+		if err.Error() == "rpc error: code = NotFound desc = Document not found" {
 			c.JSON(http.StatusNotFound, gin.H{"error": "Education not found"})
 		} else {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -171,7 +171,7 @@ func DeleteEducation(c *gin.Context) {
 	docRef := coll.Doc(id)
 	_, err := docRef.Delete(ctx)
 	if err != nil {
-		if err != nil && err.Error() == "rpc error: code = NotFound desc = Document not found" {
+		if err.Error() == "rpc error: code = NotFound desc = Document not found" {
 			c.JSON(http.StatusNotFound, gin.H{"error": "Education not found"})
 		} else {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

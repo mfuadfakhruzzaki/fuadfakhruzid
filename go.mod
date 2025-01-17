@@ -4,13 +4,13 @@ go 1.23.5
 
 require (
 	cloud.google.com/go/firestore v1.18.0
+	cloud.google.com/go/storage v1.43.0
 	firebase.google.com/go v3.13.0+incompatible
 
 )
 
 require (
 	cloud.google.com/go/iam v1.2.2 // indirect
-	cloud.google.com/go/storage v1.43.0 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect

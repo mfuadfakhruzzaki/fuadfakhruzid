@@ -57,7 +57,7 @@ func GetHonorByID(c *gin.Context) {
 	docSnap, err := docRef.Get(ctx)
 	if err != nil {
 		// Jika dokumen tidak ditemukan
-		if err != nil && err.Error() == "rpc error: code = NotFound desc = Document not found" {
+		if err.Error() == "rpc error: code = NotFound desc = Document not found" {
 			c.JSON(http.StatusNotFound, gin.H{"error": "Honor not found"})
 		} else {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -140,7 +140,7 @@ func UpdateHonor(c *gin.Context) {
 	docRef := coll.Doc(id)
 	_, err := docRef.Update(ctx, updates)
 	if err != nil {
-		if err != nil && err.Error() == "rpc error: code = NotFound desc = Document not found" {
+		if err.Error() == "rpc error: code = NotFound desc = Document not found" {
 			c.JSON(http.StatusNotFound, gin.H{"error": "Honor not found"})
 		} else {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -162,7 +162,7 @@ func DeleteHonor(c *gin.Context) {
 	docRef := coll.Doc(id)
 	_, err := docRef.Delete(ctx)
 	if err != nil {
-		if err != nil && err.Error() == "rpc error: code = NotFound desc = Document not found" {
+		if err.Error() == "rpc error: code = NotFound desc = Document not found" {
 			c.JSON(http.StatusNotFound, gin.H{"error": "Honor not found"})
 		} else {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

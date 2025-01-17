@@ -62,7 +62,7 @@ func GetCertificationByID(c *gin.Context) {
 	docSnap, err := docRef.Get(ctx)
 	if err != nil {
 		// Jika dokumen tidak ditemukan, Firestore akan mengembalikan error
-		if err != nil && err.Error() == "rpc error: code = NotFound desc = Document not found" {
+		if err.Error() == "rpc error: code = NotFound desc = Document not found" {
 			c.JSON(http.StatusNotFound, gin.H{"error": "Certification not found"})
 		} else {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -152,7 +152,7 @@ func UpdateCertification(c *gin.Context) {
 	docRef := coll.Doc(id)
 	_, err := docRef.Update(ctx, updateData)
 	if err != nil {
-		if err != nil && err.Error() == "rpc error: code = NotFound desc = Document not found" {
+		if err.Error() == "rpc error: code = NotFound desc = Document not found" {
 			c.JSON(http.StatusNotFound, gin.H{"error": "Certification not found"})
 		} else {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -174,7 +174,7 @@ func DeleteCertification(c *gin.Context) {
 	docRef := coll.Doc(id)
 	_, err := docRef.Delete(ctx)
 	if err != nil {
-		if err != nil && err.Error() == "rpc error: code = NotFound desc = Document not found" {
+		if err.Error() == "rpc error: code = NotFound desc = Document not found" {
 			c.JSON(http.StatusNotFound, gin.H{"error": "Certification not found"})
 		} else {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

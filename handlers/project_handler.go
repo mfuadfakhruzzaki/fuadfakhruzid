@@ -56,7 +56,7 @@ func GetProjectByID(c *gin.Context) {
 	docRef := coll.Doc(id)
 	docSnap, err := docRef.Get(ctx)
 	if err != nil {
-		if err != nil && err.Error() == "rpc error: code = NotFound desc = Document not found" {
+		if err.Error() == "rpc error: code = NotFound desc = Document not found" {
 			c.JSON(http.StatusNotFound, gin.H{"error": "Project not found"})
 		} else {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -146,7 +146,7 @@ func UpdateProject(c *gin.Context) {
 	docRef := coll.Doc(id)
 	_, err := docRef.Update(ctx, updates)
 	if err != nil {
-		if err != nil && err.Error() == "rpc error: code = NotFound desc = Document not found" {
+		if err.Error() == "rpc error: code = NotFound desc = Document not found" {
 			c.JSON(http.StatusNotFound, gin.H{"error": "Project not found"})
 		} else {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -168,7 +168,7 @@ func DeleteProject(c *gin.Context) {
 	docRef := coll.Doc(id)
 	_, err := docRef.Delete(ctx)
 	if err != nil {
-		if err != nil && err.Error() == "rpc error: code = NotFound desc = Document not found" {
+		if err.Error() == "rpc error: code = NotFound desc = Document not found" {
 			c.JSON(http.StatusNotFound, gin.H{"error": "Project not found"})
 		} else {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

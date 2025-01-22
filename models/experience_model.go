@@ -1,5 +1,9 @@
 package models
 
+type ExperiencesWrapper struct {
+	Experiences []Experience `firestore:"experiences" json:"experiences"`
+}
+
 type Experience struct {
 	ID             string `firestore:"id,omitempty" json:"id,omitempty"` // Akan diisi saat GET
 	Title          string `firestore:"title" json:"title"`

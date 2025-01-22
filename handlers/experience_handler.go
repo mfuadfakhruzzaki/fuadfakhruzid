@@ -15,36 +15,34 @@ import (
 
 // GET /experiences
 func GetAllExperiences(c *gin.Context) {
-	coll := config.GetCollection("experiences")
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
+    coll := config.GetCollection("experiences")
+    ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+    defer cancel()
 
-	iter := coll.Documents(ctx)
-	defer iter.Stop()
+    iter := coll.Documents(ctx)
+    defer iter.Stop()
 
-	var results []models.Experience
-	for {
-		doc, err := iter.Next()
-		if err == iterator.Done {
-			break
-		}
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
-
-		var exp models.Experience
-		if err := doc.DataTo(&exp); err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
-		// Set document ID ke field ID model
-		exp.ID = doc.Ref.ID
-		results = append(results, exp)
-	}
-
-	c.JSON(http.StatusOK, results)
+    var wrapper models.ExperiencesWrapper
+    // Asumsikan hanya ada satu dokumen yang menyimpan seluruh data
+    doc, err := iter.Next()
+    if err != nil {
+	    if err == iterator.Done {
+		    c.JSON(http.StatusNotFound, gin.H{"error": "No experiences found"})
+		    return
+	    }
+	    c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	    return
+    }
+    
+    if err := doc.DataTo(&wrapper); err != nil {
+	    c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	    return
+    }
+    
+    // Jika perlu, berikan ID dokumen atau biarkan seperti itu
+    c.JSON(http.StatusOK, wrapper.Experiences)
 }
+
 
 // GET /experiences/:id
 func GetExperienceByID(c *gin.Context) {

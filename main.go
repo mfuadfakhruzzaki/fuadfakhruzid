@@ -11,33 +11,57 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// CORSMiddleware menambahkan header CORS pada tiap response
+func CORSMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Ganti '*' dengan domain yang diizinkan, misal "https://yourfrontenddomain.com" di produksi
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "https://www.fuadfakhruz.id")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type, Authorization")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+
+		// Jika request method OPTIONS, langsung balas dengan status No Content (204)
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(204)
+			return
+		}
+
+		c.Next()
+	}
+}
+
 func main() {
-    config.LoadEnv()
-    
-    // Inisialisasi Firestore (dan baca environment variables)
-    if err := config.InitFirestore(); err != nil {
-        log.Fatalf("Error initializing Firestore: %v", err)
-    }
+	// Memuat environment variables
+	config.LoadEnv()
 
-    if err := config.InitGCS(); err != nil {
-        log.Fatalf("Failed to initialize Google Cloud Storage: %v", err)
-    }
-    
+	// Inisialisasi Firestore (dan membaca environment variables)
+	if err := config.InitFirestore(); err != nil {
+		log.Fatalf("Error initializing Firestore: %v", err)
+	}
 
-    r := gin.Default()
+	// Inisialisasi Google Cloud Storage
+	if err := config.InitGCS(); err != nil {
+		log.Fatalf("Failed to initialize Google Cloud Storage: %v", err)
+	}
 
-    // Register Routes
-    routes.RegisterRoutes(r)
+	// Inisialisasi router dengan Gin
+	r := gin.Default()
 
-    // Baca PORT dari env
-    port := os.Getenv("PORT")
-    if port == "" {
-        port = "8080" // default
-    }
+	// Daftarkan middleware CORS
+	r.Use(CORSMiddleware())
 
-    addr := fmt.Sprintf(":%s", port)
-    log.Printf("Starting server on port %s", port)
-    if err := r.Run(addr); err != nil {
-        log.Fatal(err)
-    }
+	// Register routes dari package routes
+	routes.RegisterRoutes(r)
+
+	// Ambil nilai PORT dari environment, jika tidak ada gunakan nilai default 8080
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	addr := fmt.Sprintf(":%s", port)
+	log.Printf("Starting server on port %s", port)
+	if err := r.Run(addr); err != nil {
+		log.Fatal(err)
+	}
 }

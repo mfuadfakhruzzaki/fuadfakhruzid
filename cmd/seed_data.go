@@ -53,8 +53,8 @@ func seedProfile() {
 	profile := map[string]interface{}{
 		"full_name":           "Muhammad Fuad Fakhruzzaki",
 		"headline":            "Software Engineer",
-		"about":               "With a strong passion for technology and innovation, I thrive on exploring new advancements...",
-		"profile_picture_url": "https://example.com/my-profile-pic.png", // Ganti jika perlu
+		"about":               "With a strong passion for technology and innovation, I thrive on exploring new advancements and applying them to real-world challenges. My journey in technology began at Diponegoro University, where being part of the Computer Engineering program has been a transformative experience.",
+		"profile_picture_url": "https://media.licdn.com/dms/image/v2/D5603AQGUHWbm6udvZA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1703449502230?e=1743033600&v=beta&t=GBsYuo2Y9J32-_tWzjC05hfi2Z2sFBMvP4ZqvTGa4yk", // Ganti jika perlu
 		"cv_url":              "https://example.com/my-cv.pdf",            // Ganti jika perlu
 		"updated_at":          time.Now().Format(time.RFC3339),
 		"location":            "Semarang, Indonesia",
@@ -96,13 +96,12 @@ func seedEducation() {
 
 	edu := map[string]interface{}{
 		"institution":    "Diponegoro University",
-		"degree":         "Computer Engineering / GPA: 3.51",
+		"degree":         "Computer Engineering / GPA: 3.55",
 		"field_of_study": "Computer Engineering",
 		"location":       "Semarang, Indonesia",
-		"start_date":     "August 2024",
+		"start_date":     "August 2022",
 		"end_date":       "Present",
-		"description": `At Diponegoro University, majoring in Computer Engineering, I am building a solid foundation in software development,
-cloud computing, and artificial intelligence. I aim to contribute to innovative projects that solve real-world problems.`,
+		"description": `At Diponegoro University, majoring in Computer Engineering, I am building a solid foundation in software development, cloud computing, and artificial intelligence. I aim to contribute to innovative projects that solve real-world problems.`,
 	}
 
 	_, _, err = coll.Add(ctx, edu)
@@ -129,7 +128,7 @@ func seedExperiences() {
 		"location":       "Semarang, Indonesia",
 		"start_date":     "July 2024",
 		"end_date":       "August 2024",
-		"description":    `During my internship at Telkomsel in the IT Operations Department, I gained experience using Google Cloud Platform services...`,
+		"description":    `During my internship at Telkomsel in the IT Operations Department for the Central Java and Yogyakarta regions, I gained comprehensive experience in cloud-based and software development technologies. I worked extensively with Google Cloud Platform services, including Google Compute Engine, Google Cloud Storage, and Cloud Firestore, to manage and optimize cloud solutions. Utilizing Golang with the Gin framework, I developed secure back-end systems using JWT, middleware, and REST APIs, tested with Postman. On the front-end, I enhanced my skills in React Native, TypeScript, and JavaScript for creating dynamic user interfaces, while leveraging PostgreSQL for database management. Additionally, I deepened my understanding of Authentication Systems, API integrations, and version control with GitHub, solidifying my ability to build scalable and efficient applications.`,
 		"experience_type": "Work Experience",
 		"date_range":      "July 2024 - August 2024",
 	}
@@ -225,43 +224,43 @@ func seedCertifications() {
 
 	certs := []interface{}{
 		map[string]interface{}{
-			"name":                 "CCNA: Switching, Routing, and Wireless Essentials (CISCO)",
+			"name":                 "CCNA: Switching, Routing, and Wireless Essentials",
 			"issuing_organization": "CISCO",
 		},
 		map[string]interface{}{
-			"name":                 "AI Fundamentals with IBM SkillsBuild (CISCO)",
+			"name":                 "AI Fundamentals with IBM SkillsBuild",
 			"issuing_organization": "CISCO",
 		},
 		map[string]interface{}{
-			"name":                 "Artificial Intelligence Fundamentals (IBM)",
+			"name":                 "Artificial Intelligence Fundamentals",
 			"issuing_organization": "IBM",
 		},
 		map[string]interface{}{
-			"name":                 "Data Analytics Essentials (CISCO)",
+			"name":                 "Data Analytics Essentials",
 			"issuing_organization": "CISCO",
 		},
 		map[string]interface{}{
-			"name":                 "Introduction to Cybersecurity (CISCO)",
+			"name":                 "Introduction to Cybersecurity",
 			"issuing_organization": "CISCO",
 		},
 		map[string]interface{}{
-			"name":                 "Database Design (ORACLE ACADEMY)",
+			"name":                 "Database Design",
 			"issuing_organization": "ORACLE ACADEMY",
 		},
 		map[string]interface{}{
-			"name":                 "Database Foundation (ORACLE ACADEMY)",
+			"name":                 "Database Foundation",
 			"issuing_organization": "ORACLE ACADEMY",
 		},
 		map[string]interface{}{
-			"name":                 "CCNA: Introduction to Networks (CISCO)",
+			"name":                 "CCNA: Introduction to Networks",
 			"issuing_organization": "CISCO",
 		},
 		map[string]interface{}{
-			"name":                 "Introduction to IoT (CISCO)",
+			"name":                 "Introduction to IoT",
 			"issuing_organization": "CISCO",
 		},
 		map[string]interface{}{
-			"name":                 "IT Essentials (CISCO)",
+			"name":                 "IT Essentials ",
 			"issuing_organization": "CISCO",
 		},
 	}

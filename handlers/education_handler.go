@@ -94,8 +94,8 @@ func CreateEducation(c *gin.Context) {
 		"degree":        payload.Degree,
 		"field_of_study": payload.FieldOfStudy,
 		"description":   payload.Description,
-		"start_year":    payload.StartYear,
-		"end_year":      payload.EndYear,
+		"start_date":    payload.StartDate,
+		"end_date":      payload.EndDate,
 	})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -130,11 +130,11 @@ func UpdateEducation(c *gin.Context) {
 	if payload.Description != "" {
 		updates = append(updates, firestore.Update{Path: "description", Value: payload.Description})
 	}
-	if payload.StartYear != 0 {
-		updates = append(updates, firestore.Update{Path: "start_year", Value: payload.StartYear})
+	if payload.StartDate != "" {
+		updates = append(updates, firestore.Update{Path: "start_year", Value: payload.StartDate})
 	}
-	if payload.EndYear != 0 {
-		updates = append(updates, firestore.Update{Path: "end_year", Value: payload.EndYear})
+	if payload.EndDate != "" {
+		updates = append(updates, firestore.Update{Path: "end_year", Value: payload.EndDate})
 	}
 
 	if len(updates) == 0 {

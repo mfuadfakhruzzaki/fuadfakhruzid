@@ -7,6 +7,7 @@ import (
 )
 
 func RegisterRoutes(r *gin.Engine) {
+    r.GET("/", handlers.ApiAlive)
     // Profile
     r.GET("/profiles", handlers.GetAllProfiles)
     r.GET("/profiles/:id", handlers.GetProfileByID)

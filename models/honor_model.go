@@ -1,10 +1,9 @@
-// models/honor.go
 package models
 
 type Honor struct {
-	ID          string `json:"id,omitempty"` // Akan diisi saat GET
-	Title       string `json:"title"`
-	Issuer      string `json:"issuer"`
-	DateAwarded string `json:"date_awarded"`
-	Description string `json:"description"`
+	ID          string `firestore:"id,omitempty" json:"id,omitempty"` // Akan diisi saat GET
+	Title       string `firestore:"title" json:"title"`
+	Issuer      string `firestore:"issuer" json:"issuer"`
+	DateAwarded string `firestore:"date_awarded" json:"date_awarded"`
+	Description string `firestore:"description" json:"description"`
 }

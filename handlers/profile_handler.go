@@ -13,6 +13,10 @@ import (
 	"google.golang.org/api/iterator"
 )
 
+func ApiAlive(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{"message": "API is alive"})
+}
+
 // GET /profiles
 func GetAllProfiles(c *gin.Context) {
 	coll := config.GetCollection("profiles")

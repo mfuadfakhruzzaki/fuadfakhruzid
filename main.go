@@ -14,9 +14,27 @@ import (
 // CORSMiddleware menambahkan header CORS pada tiap response
 func CORSMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		// Ganti '*' dengan domain yang diizinkan, misal "https://yourfrontenddomain.com" di produksi
-		c.Writer.Header().Set("Access-Control-Allow-Origin", "https://www.fuadfakhruz.id")
-		c.Writer.Header().Add("Access-Control-Allow-Origin", "https://admin.fuadfakhruz.id")
+		// Daftar domain yang diizinkan
+		allowedOrigins := []string{
+			"https://www.fuadfakhruz.id",
+			"https://admin.fuadfakhruz.id",
+		}
+
+		origin := c.Request.Header.Get("Origin")
+		allowOrigin := ""
+
+		// Periksa apakah asal request ada dalam daftar domain yang diizinkan
+		for _, o := range allowedOrigins {
+			if o == origin {
+				allowOrigin = o
+				break
+			}
+		}
+
+		if allowOrigin != "" {
+			c.Writer.Header().Set("Access-Control-Allow-Origin", allowOrigin)
+		}
+
 		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type, Authorization")
 		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")

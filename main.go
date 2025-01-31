@@ -16,6 +16,7 @@ func CORSMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// Ganti '*' dengan domain yang diizinkan, misal "https://yourfrontenddomain.com" di produksi
 		c.Writer.Header().Set("Access-Control-Allow-Origin", "https://www.fuadfakhruz.id")
+		c.Writer.Header().Add("Access-Control-Allow-Origin", "https://admin.fuadfakhruz.id")
 		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type, Authorization")
 		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")

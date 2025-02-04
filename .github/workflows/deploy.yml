@@ -1,0 +1,38 @@
+name: Deploy to Dokploy
+
+on:
+  push:
+    branches:
+      - main # Workflow berjalan saat ada push ke branch 'main'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Clone repository
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      # Step 2: Membuat folder config untuk menyimpan file JSON
+      - name: Create Config Directory
+        run: mkdir -p config
+
+      # Step 3: Membuat file Firebase Admin SDK dari GitHub Secret
+      - name: Create Firebase Admin SDK JSON
+        run: echo "${{ secrets.FUADFAKHRUZID_FIREBASE_ADMINSDK_FBSVC_41A1B40D6D_JSON }}" > config/fuadfakhruzid-firebase-adminsdk-fbsvc-41a1b40d6d.json
+
+      # Step 4: Membuat file GCS Key dari GitHub Secret
+      - name: Create GCS Key JSON
+        run: echo "${{ secrets.FUADFAKHRUZID_1FB2C006393E_JSON }}" > config/fuadfakhruzid-1fb2c006393e.json
+
+      # Step 5: Verifikasi file telah dibuat (opsional untuk debugging)
+      - name: Verify Files
+        run: |
+          ls -l config
+          cat config/fuadfakhruzid-firebase-adminsdk-fbsvc-41a1b40d6d.json
+          cat config/fuadfakhruzid-1fb2c006393e.json
+
+      # Step 6: Deploy ke Dokploy menggunakan API Token
+      - name: Deploy to Dokploy
+        run: dokploy deploy --token ${{ secrets.DOKPLOY_API_TOKEN }} --app fuadfakhruzid-backend-bpqwhd

@@ -33,6 +33,16 @@ jobs:
           cat config/fuadfakhruzid-firebase-adminsdk-fbsvc-41a1b40d6d.json
           cat config/fuadfakhruzid-1fb2c006393e.json
 
+      - name: Create .env File
+        run: |
+          echo "GOOGLE_APPLICATION_CREDENTIALS=./config/fuadfakhruzid-firebase-adminsdk-fbsvc-41a1b40d6d.json" > .env
+          echo "PORT=8081" >> .env
+          echo "FIREBASE_PROJECT_ID=fuadfakhruzid" >> .env
+          echo "GCS_KEY_FILE=./config/fuadfakhruzid-1fb2c006393e.json" >> .env
+          echo "GCS_BUCKET_NAME=fuadfakhruzid" >> .env
+          echo "PROFILE_PICTURE_PATH=profile_pictures" >> .env
+          echo "CV_PATH=cv_uploads" >> .env
+
       # Step 6: Deploy ke Dokploy menggunakan API Token
       - name: Deploy to Dokploy
         run: dokploy deploy --token ${{ secrets.DOKPLOY_API_TOKEN }} --app fuadfakhruzid-backend-bpqwhd

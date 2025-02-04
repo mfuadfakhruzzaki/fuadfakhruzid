@@ -3,36 +3,36 @@ name: Deploy to Dokploy
 on:
   push:
     branches:
-      - main # Workflow berjalan saat ada push ke branch 'main'
+      - main # Jalankan saat push ke branch main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Clone repository
+      # Step 1: Checkout repository
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      # Step 2: Membuat folder config untuk menyimpan file JSON
+      # Step 2: Install Dokploy CLI
+      - name: Install Dokploy CLI
+        run: |
+          curl -sSL https://get.dokploy.com/install.sh | bash
+          sudo mv dokploy /usr/local/bin/
+
+      # Step 3: Buat folder config untuk file JSON
       - name: Create Config Directory
         run: mkdir -p config
 
-      # Step 3: Membuat file Firebase Admin SDK dari GitHub Secret
+      # Step 4: Buat file Firebase Admin SDK dari GitHub Secret
       - name: Create Firebase Admin SDK JSON
         run: echo "${{ secrets.FUADFAKHRUZID_FIREBASE_ADMINSDK_FBSVC_41A1B40D6D_JSON }}" > config/fuadfakhruzid-firebase-adminsdk-fbsvc-41a1b40d6d.json
 
-      # Step 4: Membuat file GCS Key dari GitHub Secret
+      # Step 5: Buat file GCS Key dari GitHub Secret
       - name: Create GCS Key JSON
         run: echo "${{ secrets.FUADFAKHRUZID_1FB2C006393E_JSON }}" > config/fuadfakhruzid-1fb2c006393e.json
 
-      # Step 5: Verifikasi file telah dibuat (opsional untuk debugging)
-      - name: Verify Files
-        run: |
-          ls -l config
-          cat config/fuadfakhruzid-firebase-adminsdk-fbsvc-41a1b40d6d.json
-          cat config/fuadfakhruzid-1fb2c006393e.json
-
+      # Step 6: Buat file .env
       - name: Create .env File
         run: |
           echo "GOOGLE_APPLICATION_CREDENTIALS=./config/fuadfakhruzid-firebase-adminsdk-fbsvc-41a1b40d6d.json" > .env
@@ -43,6 +43,6 @@ jobs:
           echo "PROFILE_PICTURE_PATH=profile_pictures" >> .env
           echo "CV_PATH=cv_uploads" >> .env
 
-      # Step 6: Deploy ke Dokploy menggunakan API Token
+      # Step 7: Deploy ke Dokploy
       - name: Deploy to Dokploy
         run: dokploy deploy --token ${{ secrets.DOKPLOY_API_TOKEN }} --app fuadfakhruzid-backend-bpqwhd

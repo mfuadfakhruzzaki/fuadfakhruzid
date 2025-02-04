@@ -75,7 +75,7 @@ func main() {
 	// Ambil nilai PORT dari environment, jika tidak ada gunakan nilai default 8080
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8080"
+		port = "8081"
 	}
 
 	addr := fmt.Sprintf(":%s", port)

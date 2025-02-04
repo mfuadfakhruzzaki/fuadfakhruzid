@@ -17,7 +17,10 @@ jobs:
       # Step 2: Install Dokploy CLI
       - name: Install Dokploy CLI
         run: |
-          curl -sSL https://get.dokploy.com/install.sh | bash
+          curl -sSL https://get.dokploy.com/install.sh | bash || {
+            echo "Gagal mengunduh Dokploy CLI. Coba periksa koneksi atau URL." 
+            exit 1
+          }
           sudo mv dokploy /usr/local/bin/
 
       # Step 3: Buat folder config untuk file JSON
@@ -26,11 +29,21 @@ jobs:
 
       # Step 4: Buat file Firebase Admin SDK dari GitHub Secret
       - name: Create Firebase Admin SDK JSON
-        run: echo "${{ secrets.FUADFAKHRUZID_FIREBASE_ADMINSDK_FBSVC_41A1B40D6D_JSON }}" > config/fuadfakhruzid-firebase-adminsdk-fbsvc-41a1b40d6d.json
+        run: |
+          if [ -z "${{ secrets.FUADFAKHRUZID_FIREBASE_ADMINSDK_FBSVC_41A1B40D6D_JSON }}" ]; then
+            echo "Secret untuk Firebase Admin SDK belum dikonfigurasi."
+            exit 1
+          fi
+          echo "${{ secrets.FUADFAKHRUZID_FIREBASE_ADMINSDK_FBSVC_41A1B40D6D_JSON }}" > config/fuadfakhruzid-firebase-adminsdk-fbsvc-41a1b40d6d.json
 
       # Step 5: Buat file GCS Key dari GitHub Secret
       - name: Create GCS Key JSON
-        run: echo "${{ secrets.FUADFAKHRUZID_1FB2C006393E_JSON }}" > config/fuadfakhruzid-1fb2c006393e.json
+        run: |
+          if [ -z "${{ secrets.FUADFAKHRUZID_1FB2C006393E_JSON }}" ]; then
+            echo "Secret untuk GCS Key belum dikonfigurasi."
+            exit 1
+          fi
+          echo "${{ secrets.FUADFAKHRUZID_1FB2C006393E_JSON }}" > config/fuadfakhruzid-1fb2c006393e.json
 
       # Step 6: Buat file .env
       - name: Create .env File
@@ -43,6 +56,19 @@ jobs:
           echo "PROFILE_PICTURE_PATH=profile_pictures" >> .env
           echo "CV_PATH=cv_uploads" >> .env
 
-      # Step 7: Deploy ke Dokploy
+      # Step 7: Verifikasi file yang telah dibuat (opsional untuk debugging)
+      - name: Verify Files
+        run: |
+          echo "Isi folder config:"
+          ls -la config
+          echo "Isi .env:"
+          cat .env
+
+      # Step 8: Deploy ke Dokploy
       - name: Deploy to Dokploy
-        run: dokploy deploy --token ${{ secrets.DOKPLOY_API_TOKEN }} --app fuadfakhruzid-backend-bpqwhd
+        run: |
+          if [ -z "${{ secrets.DOKPLOY_API_TOKEN }}" ]; then
+            echo "DOKPLOY_API_TOKEN belum dikonfigurasi di GitHub Secrets."
+            exit 1
+          fi
+          dokploy deploy --token ${{ secrets.DOKPLOY_API_TOKEN }} --app fuadfakhruzid-backend-bpqwhd
